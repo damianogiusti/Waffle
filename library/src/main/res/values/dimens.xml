@@ -4,4 +4,5 @@
     <dimen name="list_item_padding_vertical">16dp</dimen>
     <dimen name="list_item_padding_horizontal">16dp</dimen>
     <dimen name="font_16sp">16sp</dimen>
+    <dimen name="font_14sp">14sp</dimen>
 </resources>

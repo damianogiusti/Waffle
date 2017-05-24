@@ -1,12 +1,13 @@
 package com.damianogiusti.waffle;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.AttrRes;
-import android.support.annotation.CallSuper;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IdRes;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +37,6 @@ public abstract class WafflePreference extends RelativeLayout {
         setupView(context);
     }
 
-    @CallSuper
     protected void setupView(Context context) {
         LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         setLayoutParams(layoutParams);
@@ -51,9 +51,9 @@ public abstract class WafflePreference extends RelativeLayout {
             setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
         }
 
-        titleTextView = defaultTextView(context);
+        titleTextView = primaryTextView(context);
         titleTextView.setId(TITLE_ID);
-        subtitleTextView = defaultTextView(context);
+        subtitleTextView = secondaryTextView(context);
         subtitleTextView.setId(SUBTITLE_ID);
         controlContainer = new LinearLayout(context);
         controlContainer.setId(CONTAINER_ID);
@@ -102,6 +102,13 @@ public abstract class WafflePreference extends RelativeLayout {
         linearLayout.addView(titleTextView);
         linearLayout.addView(subtitleTextView);
         addView(linearLayout);
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPreferenceClicked();
+            }
+        });
     }
 
     public void setWaffleChangeListener(WaffleChangeListener waffleChangeListener) {
@@ -118,9 +125,18 @@ public abstract class WafflePreference extends RelativeLayout {
         return outValue.resourceId;
     }
 
-    protected TextView defaultTextView(Context context) {
+    protected TextView primaryTextView(Context context) {
         TextView textView = new TextView(context);
+        textView.setTextColor(Color.BLACK);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen(R.dimen.font_16sp));
         return textView;
     }
+
+    protected TextView secondaryTextView(Context context) {
+        TextView textView = new TextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen(R.dimen.font_14sp));
+        return textView;
+    }
+
+    protected abstract void onPreferenceClicked();
 }

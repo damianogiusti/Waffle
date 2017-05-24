@@ -1,7 +1,7 @@
 package com.damianogiusti.waffle.preferences;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatCheckBox;
+import android.widget.CheckBox;
 
 import com.damianogiusti.waffle.WafflePreference;
 
@@ -10,6 +10,8 @@ import com.damianogiusti.waffle.WafflePreference;
  */
 public class CheckBoxWaffle extends WafflePreference {
 
+    private CheckBox checkBox;
+
     public CheckBoxWaffle(Context context) {
         super(context);
     }
@@ -17,6 +19,12 @@ public class CheckBoxWaffle extends WafflePreference {
     @Override
     protected void setupView(Context context) {
         super.setupView(context);
-        controlContainer.addView(new AppCompatCheckBox(context));
+        checkBox = new CheckBox(context);
+        controlContainer.addView(checkBox);
+    }
+
+    @Override
+    protected void onPreferenceClicked() {
+        checkBox.toggle();
     }
 }
